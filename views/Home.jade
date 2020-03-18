@@ -1,0 +1,155 @@
+extend layout
+block content
+  -var toast=JSON.parse(toastcontent);
+  -var received=JSON.parse(rec)
+  script.
+    function Autodelete(){
+      var xmlhttp=new XMLHttpRequest();
+      xmlhttp.onreadystatechange=function(){
+        console.log(this.responseText);
+      }
+      xmlhttp.open('GET','/DeletePending',true);
+      xmlhttp.send();
+    }
+    Autodelete();
+  if(toast.length>0)
+    each val,key in toast
+      if(val.seen==false)
+        div.toast(data-autohide='false',id=val._id+'toast')
+          div.toast-header
+            strong.mr-auto.text-primary  Friend Request
+            button.ml-2.mb-1.close(data-dismiss='toast') &times;
+          div.toast-body(id=val._id+'c')
+            p=val.from+'Has sent you request'
+            button.btn.btn-primary(onclick="accept(\'"+val._id+"\')") Accept
+            button.btn.btn-primary(onclick="deleterequest(\'"+val._id+"\')") Delete
+      if(val.seen==true)
+        div.toast(data-autohide='false',id=val._id+'toast')
+          div.toast-header
+            strong.mr-auto.text-primary  Friend Request
+            button.ml-2.mb-1.close(data-dismiss='toast') &times;
+          div.toast-body(id=val._id+'c')
+            p=val.to+'Has accepted your request'
+            button.btn.btn-primary(onclick="windows.location.href='/Chat/"+val.to+"')" ) Say Hi 
+        script.
+
+  script.
+      $(document).ready(function(){
+        $('.toast').toast('show');
+              });
+  script.
+      function accept(id){
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function(){
+          document.getElementById(id+'c').innerHTML="<p>"+this.responseText+'</p>';
+        }
+        xmlhttp.open('GET','/accept/'+id,true)
+        xmlhttp.send();
+        }
+       function deleterequest(id){
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange=function(){
+          document.getElementById(id+'c').innerHTML="<p>"+this.responseText+"</p>";
+        }
+        xmlhttp.open('GET','/Deleterequest/'+id,true)
+        xmlhttp.send();
+      }
+      
+  div#content
+    div#post
+      form(enctype='multipart/form-data',action="/PostDetails", method="post")
+        textarea(name="Caption", cols="20", rows="5",id='Caption',placeholder='Caption Here')
+        input(type="file",name='PostImage')
+        input(type="submit" value='Post' name='Post')
+    -var array=JSON.parse(HomeContent)
+     script.
+       console.log(!{Homecontent}+'as');
+    -var username=JSON.parse(Friendslist)[0]
+    -var FriendsList=JSON.parse(Friendslist)
+        each val in array
+          div(id=val._id).hpost
+            h2.hh2=val.username
+            h3.hh3=val.caption
+            if(val.Imageurl)
+              img.himg.img-thumbnail(src="/images/PostUploads/"+val.Imageurl)
+            
+              div(id='cmtbox'+val._id)
+                if(val.comments)
+                  -var commentobject= JSON.parse(val.comments)
+                     each value,key in commentobject
+                       p.pcmts=key+':'+value
+                       
+                    
+                    
+              input.inputcmts.form-control(type="text",name='comments',id='usercmt'+val._id,placeholder='Comment Here...')
+              div.btn-groups
+            if(val.comments)
+              -var cmnt=JSON.parse(val.comments)
+                if(username in cmnt)
+                  button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\')",id='cmt'+val._id,placeholder='Comment Here...') Repost
+                else
+                  button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\')",id='cmt'+val._id,placeholder='Comment Here...') Post
+            else
+              button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\')",id='cmt'+val._id,,placeholder='Comment Here...') Post
+            -var likearray=val.likes.split(',')
+            -var len=likearray.length-1
+               if(likearray.indexOf(username)!=-1)
+                button.btn.btn-secondary.hlikebtn(onclick="like(\'"+val._id+"\')",id='lbtn'+val._id) Dislike
+                  <span class='badge badge-light'>!{len}</span>
+               else
+                button.btn.btn-secondary.hlikebtn(onclick="like(\'"+val._id+"\')",id='lbtn'+val._id) like 
+                  <span class='badge badge-light'>!{len}</span>
+               button.btn.btn-secondary(data-toggle='modal',data-target=val._id+'modal',onclick="ShowModal(\'"+val._id+"\')") Share
+               div.modal.face(id=val._id+'modal')
+                 div.modal-dialog.modal-sm
+                   div.modal-content
+                     div.modal-header
+                       h4.modal-title  Share Post To Your Friends
+                       button.close(data-dismiss='modal') &times;
+                     div.modal-body
+                       each value,index in FriendsList
+                           if(index!=0)
+                             label.cont=value
+                               input(type='checkbox',name='friends',value=value)
+                               span.checkmark
+                         div.modal-footer
+                             input.btn.btn-secondary(type="Submit",value='Send',onclick="SharePost(\'"+val._id+"\')")
+                             button.btn.btn-secondary(data-dismiss='modal') Cancel
+             script.
+                  var socket=io.connect('http://localhost:3000');
+                  var username=!{Friendslist}[0];
+                  
+                  function SharePost(id){
+                    var friendsarray=document.getElementsByName('friends');
+                    var jsonarray=[];
+                   
+                      friendsarray.forEach(function(e){
+                        if(e.checked){
+                         jsonarray.push(e.value);
+                        }
+                      })
+                    if(jsonarray.length!=0)
+                    socket.emit('Share Post',{list:JSON.stringify(jsonarray),id:id,from:username});
+                    else
+                    alert('No Friends are selected');
+                    }
+                  
+                  function ShowModal(id){
+                    console.log(id+'modal');
+                    $(document).ready(function() {
+                      $('#'+id+'modal').modal();
+                      });
+                    }
+                        
+          
+        script(src="/javascripts/AjaxCall.js")
+            
+  div#friendslist
+    h1#hh1 Here Your Friends
+    ul
+      -var list=JSON.parse(Friendslist)
+        each val,index in list
+          if(index!=0)
+            li=val
+        
+  

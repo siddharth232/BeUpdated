@@ -1,0 +1,27 @@
+doctype html
+html
+  head
+    title BeUpdated
+    link(rel='stylesheet', href='/stylesheets/Index.css')
+    link(href="https://fonts.googleapis.com/css?family=B612+Mono&display=swap",rel="stylesheet")
+   <link href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet">
+  body
+    if (javascript)
+      script(type='text/javascript').
+        var message='#{javascript}'.toString();
+        alert(message);
+    div#BackgroundImage
+    div#Form
+      h1.Signh1 BeUpdated
+      h2.signh2  &nbsp &nbsp &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspLog In
+      form(action='/login' method='post')
+        input.inputtextfield#name(type="text" name="username" placeholder="UserName..." required)
+        br
+        input.inputtextfield#password(type="password" name="password" placeholder="Password..." required)
+        br
+        input#button(type="submit" name="signup" value="Log In")
+        br
+        br
+      p 
+        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        h4#signp(onclick='window.location.href="/register"') &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspCreate One Its Free & Always

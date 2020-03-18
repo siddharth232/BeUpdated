@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title BeUpdated
+    link(rel='stylesheet', href='/stylesheets/Index.css')
+    link(href="https://fonts.googleapis.com/css?family=B612+Mono&display=swap",rel="stylesheet")
+   <link href="https://fonts.googleapis.com/css?family=Dancing+Script&display=swap" rel="stylesheet">
+  body
+    if (javascript)
+      script(type='text/javascript').
+        var message='#{javascript}'.toString();
+        alert(message);
+    div#BackgroundImage
+    div#Form
+      h1.Signh1 BeUpdated
+      h2.signh2 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspBe Updated With your 
+      h2.signh2 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspFriends&World
+      form(action='/register' method='post')
+        input.inputtextfield#name(type="text" name="uname" placeholder="UserName..." required)
+        br
+        textarea.inputtextfield#address(type="text" name="email" placeholder="Email..." cols='20' required)
+        br
+        select(name='country').custom-select.mb-3.inputtextfield#country
+          option(selected) Select Your Country
+          option(value='in') India
+          option(value='au') Australia
+          option(value='gb') United Kingdom
+          option(value='us') United States
+        input.inputtextfield#password(type="password" name="pass" placeholder="Password..." required)
+        br
+        input.inputtextfield#cpassword(type="password" name="cpass" placeholder="Confirm Password..." required)
+        br
+        input.inputtextfield#mobile(type='number' name='mobile' placeholder='Mobile Number...' required)
+        br
+        input#button(type="submit" name="signup" value="Sign Up")
+        br
+        br
+      p&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        h4#signp(onclick='window.location.href="/"') &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspAlready Have Account ?

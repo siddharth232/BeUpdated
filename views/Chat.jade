@@ -1,0 +1,14 @@
+extend layout
+block content
+  div#pagecontent
+    div#chatlist
+       -var array=listcontent.split(',');
+        ul
+          each val,index in array
+            if(index!=0)
+              li(onclick="document.location.href='/Chat/"+val+"'")#friendschatlist=val
+
+    div#chatcontent
+     h1=chatcontent
+    script.
+        console.log('#{username}');

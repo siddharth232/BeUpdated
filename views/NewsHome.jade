@@ -1,0 +1,76 @@
+extend layout
+block content
+  div#pagecontent
+    div#options
+      ul#newscategories
+        li.category(onclick='document.location.href="/News"')  Trending In World
+        li.category(onclick='document.location.href="/News/country"') Trending In Your Country
+        li.category(onclick='toggle()') Category
+        li.subcategory(onclick='toggle()') Back
+        li.subcategory(onclick='document.location.href="/News/category/business"') Business
+        li.subcategory(onclick='document.location.href="/News/category/health"') Health
+        li.subcategory(onclick='document.location.href="/News/category/science"') Science
+        li.subcategory(onclick='document.location.href="/News/category/sports"') Sports
+        li.subcategory(onclick='document.location.href="/News/category/technology"') Technology
+        li.subcategory(onclick='document.location.href="/News/category/entertainment"') Entertainment
+        li.category(onclick='document.location.href="/News/Readlater"') ReadLater
+        li.category(onclick='document.location.href="/News/Search"') Search
+    div#newscontent
+     -var contentobject=JSON.parse(content)
+        each val,index in contentobject
+          div(id=index)
+            h2=val.title+'-' 
+              em=val.author
+            h4=val.description
+            img.img-thumbnail.nimg(src=val.urlToImage)
+            button.btn.btn-primary(data-toggle='modal',data-target=index+'target',onclick="read(\'"+val.url+"\')") Read More
+            button.btn.btn-primary(onclick='document.location.href="/News/AddReadLater/"'+val.title) ReadLater 
+            button.btn.btn-primary(onclick="ShowModal(\'"+index+"\')",data-toggle='modal',data-target='#'+index+"modal") Share 
+            button.btn.btn-primary(onclick="Post News(\'"+val.title+"\')") Post
+            div.modal.fade(id=index+'modal')
+              div.modal-dialog.modal-dialog-centered
+                div.modal-content
+                  div.modal-header
+                    h1 Share To Your Friends
+                    button.close(data-dismiss='modal') &times;
+                  div.modal-body
+                    -var friends=Friendslist.split(',');
+                     each value,index in friends
+                       if(index!=0)
+                         label.cont=value
+                           input(type='checkbox',name='friends',value=value)
+                           span.checkmark
+                  div.modal-footer
+                    input(type="submit",value='Send',onclick="ShareNews(\'"+val.title+"\')").btn.btn-primary
+                    button.btn.btn-primary(data-dismiss='modal') Cancel
+                  script.
+                    var socket=io.connect('http://localhost:3000');
+                    var username=('!{Friendslist}').split(',')[0];
+                    function ShareNews(title){
+                     var friendsarray=document.getElementsByName('friends');
+                     var jsonarray=[];
+                     friendsarray.forEach(function(e){
+                       if(e.checked){
+                         jsonarray.push(e.value);
+                       }
+                     })
+                     if(jsonarray.length!=0)
+                     socket.emit('Share News',{title:title,from:username,list:JSON.stringify(jsonarray)});
+                     else
+                     alert('No Friends are selected');
+                    }
+                    function ShowModal(index){
+                      $(document).ready(function(){
+                        $("#"+index+"modal").modal();
+                      })
+                    }
+                    function Post News(title){
+                      var xmlhttp=new XMLHttpRequest();
+                      xmmlhttp.onreadystatechange=function(){
+                        console.log(this.responseText);
+                      }
+                      xmlhttp.open('GET','/PostNews/'+title,true);
+                      xmlhttp.send();
+                    }
+                  
+        

@@ -1,0 +1,8 @@
+extend layout
+block content
+  div#chatcontent
+    div#messageroom
+    div#sendmessage
+      input(type="text",id='msginput')
+      input(type="submit",id='Send',value='Send Message',onclick="Sendmsg(\'"+to+"\')")
+    script(src="/javascripts/SocketCall.js")

@@ -1,0 +1,41 @@
+extend layout
+block content
+  div#pagecontent
+    div#options
+      ul#newscategories
+        li.category(onclick='document.location.href="/Profile"')  Your Post
+        li.category(onclick='document.location.href="/Profile/SavedArticles"')  Your Saved Articles
+        li.category(onclick='document.location.href="/Profile/Details"')  Update Your Details
+    div#newscontent
+      -var content=JSON.parse(content)
+      -var username=!{username};
+         each val in content
+           div(id=val._id).hpost
+             h2.hh2=val.username
+             h3.hh3=val.caption
+             if(val.Imageurl)
+               img.himg.img-thumbnail(src='/images/PostUploads/'+val.Imageurl)
+               div(id='cmtbox'+val._id)
+                 if(val.comments)
+                   -var commentobject=JSON.parse(val.comments)
+                     each value,key in commentobject
+                       p.pcmts=key+":"+value
+                input.inputcmts.form-control(type="text",name='comments',id='usercmt'+val._id,placeholder='Comment Here...')
+                div.btn-groups
+              if(val.comments)
+                -var cmnt=JSON.parse(val.comments)
+                  if(username in cmnt)
+                    button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\'')",id='cmt'+val._id,placeholder='Comment Here...') Repost
+                  else
+                    button.btn.btn-secondary.pbtn(onclick='Addcomments(\''+val._id+'\')',id='cmt'+val._id,placeholder='Comment Here...') Post
+              else
+                button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\')",id='cmt'+val._id,placeholder='Comment Here...') Post
+              -var likearray=val.likes.split(',')
+              -var len=likearray.length-1
+                if(likearray.indexOf(username)!=-1)
+                  button.btn.btn-secondary.hlikebtn(onclick="like(\'"+val._id+"\')",id='lbtn'+val._id) Dislike <span class='badge badge-light'>!{len}</span>
+                else
+                  button.btn.btn-secondary.hlikebtn(onclick='like(\''+val._id+'\')',id='lbtn'+val._id) Like <span class='badge badge-light'>!{len}</span>
+                button.btn.btn-danger.hlikebtn(onclick='Delete(\''+val._id+"\')",id='dlbtn'+val._id) Delete 
+                script(src="/javascripts/AjaxCall.js")
+                

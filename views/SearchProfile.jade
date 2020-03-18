@@ -1,0 +1,70 @@
+extend layout
+block content
+  div#request
+    -var usercontent=JSON.parse(ucontent)
+    -var list=JSON.parse(friends)
+    -var Requested=JSON.parse(pending)
+      h1#shead=usercontent.username
+      if(usercontent.Country=='in')
+        h2#scountry India
+      else if(usercontent.Country=='us')
+        h2#scountry United States
+      else if(usercontent.Country=='gb')
+        h2#scountry United Kingdom
+      else if(usercontent.Country=='au')
+        h2#scountry Australia
+      div#changable
+          if(list.indexOf(usercontent.username)==-1)
+            h3#sinfo Do u want to send request?
+            button.btn.btn-primary#sbutton Send Request
+          if(Object.values(Requested).indexOf(!{username})>-1)
+            h3#sinfo Request Already Sent
+          else 
+            h3#sinfo You're Already Friend
+      script.
+        var from=!{username};
+        var to=!{to};
+        console.log(from+to);
+        function sendrequest(){
+          var xmlhttp=new XMLHttpRequest();
+          xmlhttp.onreadystatechange=function(){
+            document.getElementById('changable').innerHTML=this.responseText;
+          }
+          xmlhttp.open('GET','/Request/'+from+'/'+to,true);
+          xmlhttp.send();
+        }
+  div#pagecontent
+     div#newscontent
+      -var content=JSON.parse(contents)
+      -var username=!{username};
+         each val in content
+           div(id=val._id).hpost
+             h2.hh2=val.username
+             h3.hh3=val.caption
+             if(val.Imageurl)
+               img.himg.img-thumbnail(src='/images/PostUploads/'+val.Imageurl)
+               div(id='cmtbox'+val._id)
+                 if(val.comments)
+                   -var commentobject=JSON.parse(val.comments)
+                     each value,key in commentobject
+                       p.pcmts=key+":"+value
+               input.inputcmts.form-control(type="text",name='comments',id='usercmt'+val._id,placeholder='Comment Here...')
+               div.btn-groups
+              if(val.comments)
+                -var cmnt=JSON.parse(val.comments)
+                  if(username in cmnt)
+                    button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\'')",id='cmt'+val._id,placeholder='Comment Here...') Repost
+                  else
+                    button.btn.btn-secondary.pbtn(onclick='Addcomments(\''+val._id+'\')',id='cmt'+val._id,placeholder='Comment Here...') Post
+              else
+                button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\')",id='cmt'+val._id,placeholder='Comment Here...') Post
+              -var likearray=val.likes.split(',')
+              -var len=likearray.length-1
+                if(likearray.indexOf(username)!=-1)
+                  button.btn.btn-secondary.hlikebtn(onclick="like(\'"+val._id+"\')",id='lbtn'+val._id) Dislike <span class='badge badge-light'>!{len}</span>
+                else
+                  button.btn.btn-secondary.hlikebtn(onclick='like(\''+val._id+'\')',id='lbtn'+val._id) Like <span class='badge badge-light'>!{len}</span>
+                
+                script(src="/javascripts/AjaxCall.js")
+     
+       

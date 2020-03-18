@@ -1,0 +1,170 @@
+extend layout
+block content
+  div#pagecontent
+    div#chatlist
+      -var array=Friendslist.split(',');
+        ul
+          each val,index in array
+            if(index!=0)
+              li(onclick="document.location.href='/Chat/"+val+"'")#friendschatlist=val
+    div#chatcontent
+      div#messageroom
+
+        if(content)
+          -var object=JSON.parse(content)
+          -var to=tousername
+          -var from=fromusername
+            each val in object
+              if(val.post==false&&val.news==false)
+                if(val.message)
+                  p=val.from+':'+val.message
+                if(val.imageurl)
+                  p=val.from+':'
+                  img(src=val.imageurl,height='200px',width='200px')
+              if(val.post)
+                p=val.from+':'
+                button.btn.btn-primary(data-toggle='modal',data-target='msg'+val._id,onclick="showmodal(\'"+val._id+"\')")  View Post
+                div.modal(id='msg'+val._id)
+                  div.modal-dialog.modal-dialog-scrollable
+                    div.modal-content
+                      div.modal-header
+                        h1.modal-title=val.title
+                        button.close(data-dismiss='modal') &times;
+                      div.modal-body
+                        -var post=val.message.split('|%|');
+                        -var comments=JSON.parse(post[2]);
+                          h3=post[0]
+                          img(src='/images/PostUploads/'+val.imageurl).img-thumbnail
+                          div(id='cmtbox'+post[3])
+                            each value,key in comments
+                              p=key+":"+value
+                          input(type='text',id='usercmt'+post[3],placeholder='Comment Here...')
+                          button(onclick="Addcomments(\'"+post[3]+"\')").btn.btn-secondary Post
+                          -var likearray=post[1].split(',')
+                          -var len=likearray.length-1
+                           if(likearray.indexOf(username)!=-1)
+                             button.btn.btn-secondary(onclick="like(\'"+post[3]+"\')",id='lbtn'+post[3])  Dislike<span class='badge badge-light'>!{len}</span>
+                           else
+                             button.btn.btn-secondary(onclick="like(\'"+post[3]+"\')",id='lbtn'+post[3])  like<span class='badge badge-light'>!{len}</span>
+              if(val.news)
+                -var content=JSON.parse(val.message)
+                 script.
+                    console.log(JSON.parse('!{content}'));
+                 p=val.from+":"
+                 button.btn.btn-primary(data-toggle='modal',data-target='msg'+val._id,onclick="showmodal(\'"+val._id+"\')") View News
+                 div.modal(id='msg'+val._id)
+                  div.modal-dialog.modal-dialog-scrollable
+                    div.modal-content
+                      div.modal-header
+                        h1.modal-title=content.title
+                        button.close(data-dismiss='modal') &times;
+                      div.modal-body
+                        h3=content.description
+                        img(src=content.urlToImage).img-thumbnail
+                        button(onclick="read(\'"+content.url+"\')").btn.btn-primary  Readmore
+                if(val.score)
+                  p=val.from+":"
+                  button.btn.btn-primary(data-toggle='modal',data-target='msg'+val._id,onclick="showmodal(\'"+val._id+"\')") View Score
+                  div.modal(id='msg'+val._id)
+                    div.modal-dialog-scrollable.modal-dialog
+                      div.modal-content
+                        div.modal-header
+                          h1.modal-title Ball Blaster
+                          button.close(data-dismiss='modal') &times;
+                        div.modal-body
+                          h3 Make A Try !!
+                          img(src=val.imageurl).img-thumbnail
+                          button(onclick="window.location.href='/Game'")
+                    
+                    
+                    
+
+                        
+        else
+          h2=info
+      div#warningmessage
+      div#sendmessage
+        input(type="text",id='msginput',placeholder='Message Here!!')
+        input(type="submit",id='Send',value='Send Message',onclick="Sendmsg(\'"+to+"\',\'"+from+"\')").btn.btn-primary
+        span.btn.btn-primary.btn-file Send Photo
+          input(type='file',id='Pic',onchange='SendPicture(this)')
+      script.
+        var socket=io.connect('http://localhost:3000');
+        var username='#{fromusername}';
+        var tousername='#{tousername}';
+        socket.emit('new user',username);
+        console.log(username);
+        socket.on('add image',function(data){
+           var content=document.getElementById('messageroom');
+          content.innerHTML=content.innerHTML+'<p>'+data.from+':</p><img src="'+data.image+'",height="200px",width="200px">';
+           
+        })
+        function Sendmsg(to,from){
+          var message=document.getElementById('msginput').value;
+           // socket.emit('new user',from);
+           console.log(from+":socket");
+            console.log(message);
+            socket.emit('send message',{message:message,to:to,from:from});
+            message='';
+            }
+          socket.on('new message',function(data){
+          console.log(data+'ase');
+         var messageroom=document.getElementById('messageroom');
+    
+            messageroom.innerHTML+='<p>'+data.from+":"+data.message+"</p>";})
+            socket.on('Warning',function(data){
+              var warningmessage=document.getElementById('warningmessage');
+              warningmessage.innerHTML='<p><b>'+data+"</b></p>";
+            })
+          function SendPicture(e){
+            var file=e.files[0];
+            var reader=new FileReader();
+            reader.onload=function(evt){
+              socket.emit('user image',{image:evt.target.result,from:username,to:tousername});
+            };
+            reader.readAsDataURL(file);
+          }
+          socket.on('Shared Post',function(data){
+            var post=JSON.parse(data.message);
+            var array=post.message.split('|%|');
+            var comments=JSON.parse(array[2]);
+            var cmtstr;
+            for(key in comments){
+              cmtstr+='<p>'+key+":"+comments.key+"</p>";
+            }
+            console.log(post);
+            console.log(array);
+            var messageroom=document.getElementById('messageroom');
+            
+            var likearray=array[1].split(',');
+            var len=likearray.length-1;
+            var string;
+            if(likearray.indexOf(username)!=-1)
+             string='Dislike';
+            else
+            string='Like';
+            messageroom.innerHTML+='<p>'+data.from+":"+"</p><button class='btn btn-primary' data-toggle='modal' data-target='#modal"+post._id+"'>View Post</button><div class='modal' id='modal"+post._id+"'><div class='modal-dialog modal-dialog-scrollable'><div class='modal-content'><div class='modal-header'><h1 class='modal-title'>"+post.title+"</h1><button class='close' data-dismiss='modal'>&times;</button><div class='modal-body'><h3>"+array[0]+"</h3><img src='"+post.imageurl+"' class='img-thumbnail'><div id='cmtbox'"+cmtstr+"</div><input type='text' name='comment',placeholder='Comment Here...',id='usercmnt'"+array[3]+"><button onclick='Addcomments(\'"+array[3]+"\')'>Post</button><button onclick='like(\'"+array[3]+"\')',id='lbnt'"+array[3]+">"+string+"</button><span class='badge badge-light'>"+len+"</span>";
+          })
+          socket.on('Shared News',function(data){
+            var content=JSON.parse(data.content);
+            var messageroom=document.getElementById('messageroom');
+            messageroom.innerHTML+="<p>"+data.from+"</p><button class='btn btn-primary' data-toggle='modal' data-target='#modal"+content.title+"'>View News</button><div class='modal' id='modal"+content.title+"'><div class='modal-dialog modal-dialog-scrollable'><div class='modal-content'><div class='modal-header'><h1 class='modal-title'>"+content.title+"</h1><button class='close' data-dismiss='modal'>&times;</button><div class='modal-body'><h3>"+content.description+"<em>"+content.author+"</em></h3><img src='"+content.urlToImage+"',height='200px',width='200px'><button class='btn btn-primary' onclick='read(\'"+content.url+"\')'>Read More</button>"
+          })
+          function Addcomments(id) {
+           var comment=document.getElementById('usercmt'+id).value;
+           var xmlhttp=new XMLHttpRequest();
+           xmlhttp.onreadystatechange=function() {
+               document.getElementById('cmtbox'+id).innerHTML=this.responseText;
+            } ;
+           xmlhttp.open('GET','AddComments/'+id+'/'+comment,true);
+           xmlhttp.send();
+           }
+           function showmodal(id){
+             $(document).ready(function(){
+               $("#msg"+id).modal();
+             })
+           }
+           socket.on('Share Score',function(data){
+             var messageroom=document.getElementById('messageroom');
+            messageroom.innerHTML+="<p>"+data.from+"</p><button class='btn btn-primary' data-toggle='modal' data-target='#modal"+data.src.substring(1,7)+"'>View Score</button><div class='modal' id='modal"+data.src.substring(1,7)+"'<div class='modal-dialog modal-dialog-scrollable'><div class='modal-header'><h1 class='modal-title'>Ball Blaster</h1><button class='close' data-dismiss='modal'>&times;</button><div class='modal-body'><h3> Make A Try To Beat Your Friend Score</h3><img src='"+data.src+"',height='200px',width='200px'><button class='btn btn-primary' onclick='window.location.href=\"/Game\"' > Try It </button>";
+           })
