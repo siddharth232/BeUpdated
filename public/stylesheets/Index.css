@@ -1,0 +1,77 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    font-family: 'Dancing Script', cursive;
+}
+#BackgroundImage{
+    width: 75%;
+    float: left;
+    height: 696px;
+  
+}
+body{
+    background-image:url('/images/IndexWallpaper.jpg');
+    background-size: cover;
+}
+#Form{
+    width: 25%;
+    float: left;
+    height: 696px;
+    
+}
+.inputtextfield{
+    height: 44px;
+    border-top-color:white;
+    border-left-color: white;
+    border-right-color: white;
+    border-bottom-color: rgb(192, 176, 176) ;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+    font-size: 18px;
+    padding: 10px;
+    letter-spacing: 1px;
+    resize: none;
+    margin-top: 15px;
+    margin-left: 40px;
+    width: 250px;
+}
+#button{
+    color:white;
+    background-color: black;
+    font-weight: bold;
+    width:250px;
+    height:40px;
+    margin-top: 30px;
+    margin-left: 40px;
+    border-color: #3B6E22;
+    border-width: 1px;
+    box-sizing: border-box;
+    font-size: 20px;
+    cursor: pointer;
+   }
+.Signh1{
+    margin-top: 40px;
+    margin-left: 40px;
+    font-size: 60px;
+}
+.signh2{
+    margin-top: 10px;
+    font-size: 20px;
+    margin-left: 40px;
+    margin-bottom: 20px;
+}
+h4{
+    margin-top:-10px ;
+    cursor: pointer;
+    }
+#country{
+    
+    
+    
+    
+    
+    color: #636e72
+}

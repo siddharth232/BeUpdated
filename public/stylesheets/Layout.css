@@ -1,0 +1,472 @@
+*{
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Kulim Park', sans-serif;
+    overflow-y: hidden;
+    
+}
+#head{
+    width: 100%;
+    height: 105px;
+    overflow-x: hidden;
+}
+#container{
+    width: 100%;
+    height: 589.5px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    background-color: #DCD9D4; 
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%); 
+    background-blend-mode: soft-light,screen;
+}
+#lnav li{
+    display: inline-block;
+    padding: 8px;
+    font-size: 20px;
+}
+#lnav li:hover{
+    border-style: solid;
+    border-top-color: white;
+    border-left-color: white;
+    border-right-color: white;
+    border-bottom-color:#09203f;
+    cursor: pointer;
+}
+#lnav{
+    margin-left: 70%;
+    margin-top: 0px;
+}
+#lh1{
+    background: -webkit-linear-gradient(#09203f, #537895);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-left: 5%;
+    position: absolute;
+    top: 20px;
+    font-size: 50px;
+    
+
+}
+#searchbar{
+    position: relative;
+    top:35px;
+    left: 565px;
+}
+#search{
+    width: 265px;
+    height: 45px;
+    border-radius: 3px 3px 3px 3px;
+    border:white;
+    background-color: whitesmoke;
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px;
+    font-size: 20px;
+}
+#searchbutton{
+    margin-left: 5px;
+    height: 43px;
+    width: 60px;
+    padding: 5px;
+    background-color:black;
+    border-radius: 3px 3px 3px 3px;
+    color: whitesmoke;
+    border: black;
+    cursor: pointer;
+    position: relative;
+    top: -2px;
+    left: 10px;
+}
+#content{
+    height: 100%;
+    width: 80%;
+    background-color: #DCD9D4; 
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%); 
+    background-blend-mode: soft-light,screen;
+    float: left;
+    overflow-y: auto;
+}
+#friendslist{
+    float: left;
+    width: 20%;
+    height: 100%;
+    background-color: whitesmoke;
+}
+#hh1{
+    font-size: 25px;
+    margin-left: 20px;
+}
+#Caption{
+    resize: none;
+}
+#post{
+    margin-left: 20px;
+    border-color: #537895;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-width: 1px;
+    border-radius: 3px 3px 3px 3px;
+    margin-top: 8px;
+}
+.pbtn{
+    height: 20px;
+    width: 50px;
+    color: black;
+}
+.himg{
+    width: 70%;
+    height: 100px;
+    margin-left: 10%;
+}
+.hh2{
+    margin-left: 7%;
+}
+.hh3{
+    margin-left: 7%;
+}
+.hpost{
+    border-bottom-style:groove ;
+    border-bottom-color:#f5f6fa;
+    border-width: 3px;
+}
+.pcmts{
+    margin-left: 10%;
+}
+.inputcmts{
+    margin-left: 10%;
+    width: 20%;
+}
+.form-control{
+    width: 30%;
+}
+#pagecontent{
+   
+    width: 95%;
+    height: 97.5%;
+    margin-left: 5%;
+    margin-top: 2.5%;
+}
+#newscontent{
+    width: 70%;
+    height: 100%;
+    background-color: #f5f6fa;
+    border-radius: 5px 5px 5px 5px;
+}
+#options{
+    width: 20%;
+    height: 50%;
+    margin-right: 3%;
+    background-color: #f5f6fa;
+    float: left;
+    border-radius: 5px 5px 5px 5px;
+}
+.subcategory{
+    display: none;
+}
+#newscategories li a{
+    text-decoration: none;
+    color: black;
+}
+#newscategories li a:hover {
+    color: white;
+}
+#newscategories li a:hover #newscategories li{
+    background-color:#7ed6df;
+}
+#newscategories li{
+    cursor: pointer;
+    font-size: 20px;
+
+    padding-left: 25px;
+    padding-top: 10px;
+}
+#newscategories li:hover{
+    color:white;
+    background-color:#7ed6df;
+}
+#newscontent{
+    overflow-y: auto;
+}
+.nimg{
+    width: 60%;
+    margin-left: 5%;
+}
+#chatlist{
+    width: 20%;
+    height: 50%;
+    margin-right: 3%;
+    background-color: #f5f6fa;
+    float: left;
+    border-radius: 5px 5px 5px 5px;
+}
+#chatcontent{
+    width: 70%;
+    height: 98%;
+    background-color: #f5f6fa;
+    border-radius: 5px 5px 5px 5px;
+    margin-bottom: 10px;
+}
+#messageroom{
+    height: 400px;
+    overflow-y: auto;
+}
+#friendschatlist{
+    cursor: pointer;
+    padding-left: 60px;
+    font-size: 18px;
+}
+#friendschatlist:hover{
+    color: white;
+    background-color: #7ed6df;
+}
+#msginput{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 33px;
+    width: 90%;
+    height: 40px;
+    border-radius: 5px 5px 5px 5px;
+    border-width: 1px;
+    padding-left: 5px;
+}
+#Send{
+    margin-top: 5px;
+    width: 90%;
+    margin-left: 33px;
+}
+#Pic{
+    margin-top: 5px;
+    width: 90%;
+    margin-left: 33px;
+}
+#hide input[type=file] {
+    display:none;
+    margin:10px;
+    }
+    #hide input[type=file] + label {
+    display:inline-block;
+    margin:40px;
+    padding: 4px 32px;
+    background-color: #FFFFFF;
+    border:solid 1px #666F77;
+    border-radius: 6px;
+    color:#666F77;
+    }
+    #hide input[type=file]:active + label {
+    background-image: none;
+    background-color:#2D6C7A;
+    color:#FFFFFF;
+    }
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+        margin-top: 5px;
+        width: 90%;
+        margin-left: 33px;
+
+    }
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;   
+        cursor: inherit;
+        display: block;
+    }
+a{
+    text-decoration: none;
+    color: white;
+}
+.cont {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .cont input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .cont:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .cont input:checked ~ .checkmark {
+    background-color: #2196F3;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .cont input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .cont .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .badge{
+      margin-bottom:0px;
+      padding-top: 12px;
+  }
+  *{
+    margin: 0;
+    padding: 0;
+}
+
+#gcanvas {
+width: 900px;
+height: 592px;
+border: 1px solid black;
+position: absolute;
+left: 20%;
+top: 105px;
+display: none;
+}
+#gindex{
+width: 900px;
+height: 592px;
+border: 1px solid black;
+position: absolute;
+left: 18%;
+top: 105px;
+}
+#gtitle{
+  font-family: 'Cute Font', cursive;
+  font-size: 100px;
+  top: 40px;
+  left: 270px;
+}
+#gdes{
+  font-family: 'Cute Font', cursive;
+  font-size: 50px;
+  top: 220px;
+  left: 70px;
+}
+#gname{
+      top: 380px;
+      height: 34px;
+      border-radius: 5px 5px 5px 5px;
+      border-style: solid;
+      border-width: 1px;
+      border-color: #BDC7D8;
+      position: absolute;
+      width:320px;
+      height: 20px;
+      font-size: 18px;
+      padding: 10px;
+      left: 120px;  
+}
+#gbutt{
+    border-radius: 5px 5px 5px 5px;
+    color:white;
+    background-color: #619F4E;
+    font-weight: bold;
+    width:250px;
+    height:60px;
+    left:340px;
+    top:400px;
+    position: absolute;
+    border-color: #3B6E22;
+    border-width: 1px;
+    box-sizing: border-box;
+    font-size: 20px;
+    font-family: Helvetica;
+    cursor: pointer;
+}
+#gshare{
+    border-radius: 5px 5px 5px 5px;
+    color:white;
+    background-color: #619F4E;
+    font-weight: bold;
+    width:250px;
+    height:60px;
+    left:588px;
+    top:505px;
+    position: absolute;
+    border-color: #3B6E22;
+    border-width: 1px;
+    box-sizing: border-box;
+    font-size: 20px;
+    font-family: Helvetica;
+    cursor: pointer;
+    z-index: 1;
+    display: none;
+}
+#listcontent{
+    position: fixed;
+    z-index: 1;
+    height: auto;
+    width: 267px;
+    background-color: #2D6C7A;
+}
+#request{
+    width: 67%;
+    height: 40%;
+    background-color: #f5f6fa;
+    border-radius: 5px 5px 5px 5px;
+    margin-left: 05%;
+    margin-top: 2%;
+}
+#shead{
+    margin:3%;
+    margin-top: 2%;
+}
+#scountry{
+    margin: 2%;
+    margin-left: 3%;
+}
+#sinfo{
+    color: #636e72;
+    margin-left: 3%;
+}
+#sbutton{
+    margin-left: 3%;
+    margin-bottom: 3%;
+}
