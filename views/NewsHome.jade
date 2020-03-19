@@ -13,20 +13,18 @@ block content
         li.subcategory(onclick='document.location.href="/News/category/sports"') Sports
         li.subcategory(onclick='document.location.href="/News/category/technology"') Technology
         li.subcategory(onclick='document.location.href="/News/category/entertainment"') Entertainment
-        li.category(onclick='document.location.href="/News/Readlater"') ReadLater
         li.category(onclick='document.location.href="/News/Search"') Search
     div#newscontent
      -var contentobject=JSON.parse(content)
         each val,index in contentobject
-          div(id=index)
+          div(id=index).eachcontent
             h2=val.title+'-' 
               em=val.author
             h4=val.description
             img.img-thumbnail.nimg(src=val.urlToImage)
-            button.btn.btn-primary(data-toggle='modal',data-target=index+'target',onclick="read(\'"+val.url+"\')") Read More
-            button.btn.btn-primary(onclick='document.location.href="/News/AddReadLater/"'+val.title) ReadLater 
-            button.btn.btn-primary(onclick="ShowModal(\'"+index+"\')",data-toggle='modal',data-target='#'+index+"modal") Share 
-            button.btn.btn-primary(onclick="Post News(\'"+val.title+"\')") Post
+            button.btn.btn-primary.nbutt(data-toggle='modal',data-target=index+'target',onclick="read(\'"+val.url+"\')",style="margin-left:190px") Read More
+            button.btn.btn-primary.nbutt(onclick="ShowModal(\'"+index+"\')",data-toggle='modal',data-target='#'+index+"modal",style="width:90px") Share 
+            button.btn.btn-primary.nbutt(onclick="Post News(\'"+val.title+"\')",style="width:90px") Post
             div.modal.fade(id=index+'modal')
               div.modal-dialog.modal-dialog-centered
                 div.modal-content
@@ -64,7 +62,7 @@ block content
                         $("#"+index+"modal").modal();
                       })
                     }
-                    function Post News(title){
+                    function PostNews(title){
                       var xmlhttp=new XMLHttpRequest();
                       xmmlhttp.onreadystatechange=function(){
                         console.log(this.responseText);

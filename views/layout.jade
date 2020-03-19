@@ -28,12 +28,12 @@ html
         input(type="text" id='search' name='search' placeholder='Search For Friends...' onkeyup='listing(this)')
         div#listcontent
       ul#lnav
-        li Home
-        li News
-        li Chat
-        li Game
-        li Profile
-        li logout
+        li(onclick='window.location.href="/Home"') Home
+        li(onclick='window.location.href="/News"') News
+        li(onclick='window.location.href="/Chat"') Chat
+        li(onclick='window.location.href="/Game"') Game
+        li(onclick='window.location.href="/Profile"') Profile
+        li(onclick='window.location.href="/logout"') logout
       script.
         var listcontent=document.getElementById('listcontent');
         var list;
@@ -49,6 +49,8 @@ html
           xmlhttp.open('GET','/FriendsList/'+e.value,true);
           xmlhttp.send();
           
+          }else{
+            listcontent.innerHTML="";
           }
         }
     div#container

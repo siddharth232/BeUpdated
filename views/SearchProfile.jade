@@ -48,22 +48,22 @@ block content
                    -var commentobject=JSON.parse(val.comments)
                      each value,key in commentobject
                        p.pcmts=key+":"+value
-               input.inputcmts.form-control(type="text",name='comments',id='usercmt'+val._id,placeholder='Comment Here...')
+               input.inputcmts.form-control(type="text",name='comments',id='usercmt'+val._id,placeholder='Comment Here...',style="width:70%")
                div.btn-groups
               if(val.comments)
                 -var cmnt=JSON.parse(val.comments)
                   if(username in cmnt)
-                    button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\'')",id='cmt'+val._id,placeholder='Comment Here...') Repost
+                    button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\'')",id='cmt'+val._id,placeholder='Comment Here...',style="margin-left:110px;width:70px;height:37px;margin-right:30px;margin-top:10px") Repost
                   else
-                    button.btn.btn-secondary.pbtn(onclick='Addcomments(\''+val._id+'\')',id='cmt'+val._id,placeholder='Comment Here...') Post
+                    button.btn.btn-secondary.pbtn(onclick='Addcomments(\''+val._id+'\')',id='cmt'+val._id,placeholder='Comment Here...',style="margin-left:110px;width:70px;height:37px;margin-right:30px;margin-top:10px") Post
               else
-                button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\')",id='cmt'+val._id,placeholder='Comment Here...') Post
+                button.btn.btn-secondary.pbtn(onclick="Addcomments(\'"+val._id+"\')",id='cmt'+val._id,placeholder='Comment Here...',style="margin-left:110px;width:70px;height:37px;margin-right:30px;margin-top:10px") Post
               -var likearray=val.likes.split(',')
               -var len=likearray.length-1
                 if(likearray.indexOf(username)!=-1)
-                  button.btn.btn-secondary.hlikebtn(onclick="like(\'"+val._id+"\')",id='lbtn'+val._id) Dislike <span class='badge badge-light'>!{len}</span>
+                  button.btn.btn-secondary.hlikebtn(onclick="like(\'"+val._id+"\')",id='lbtn'+val._id,style="margin-right:30px;margin-top:10px") Dislike <span class='badge badge-light' style="margin-bottom:0px;top:3px">!{len}</span>
                 else
-                  button.btn.btn-secondary.hlikebtn(onclick='like(\''+val._id+'\')',id='lbtn'+val._id) Like <span class='badge badge-light'>!{len}</span>
+                  button.btn.btn-secondary.hlikebtn(onclick='like(\''+val._id+'\')',id='lbtn'+val._id,style="margin-right:30px;margin-top:10px") Like <span class='badge badge-light' style="margin-bottom:0px;top:3px">!{len}</span>
                 
                 script(src="/javascripts/AjaxCall.js")
      

@@ -1,10 +1,19 @@
 extend layout 
 block content
+  div#scoreboard
+    h2#board &nbsp&nbsp&nbsp&nbspScoreBoard&nbsp&nbsp&nbsp
+    ul#scorelist
+      script.
+        console.log(!{Scorelist});
+      -var score=JSON.parse(Scorelist);
+        each val in score
+          li=val.username+":"+val.score
   div#gindex
     p#gtitle Ball Blaster
     button#gbutt(onclick='start()') Play
   div.container
     button#gshare(data-toggle='modal',data-target='#sharescore',onclick='showmodal()').btn.btn-primary Share Your Score
+    button#grestart(onclick='windows.location.href="/Game"') Restart
     div.modal(id='sharescore')
       div.modal-dialog.modal-dialog-centered
         div.modal-content#content
