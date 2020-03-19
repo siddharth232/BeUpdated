@@ -94,21 +94,29 @@
     background-color: whitesmoke;
 }
 #hh1{
-    font-size: 25px;
+    font-size: 28px;
     margin-left: 20px;
+}
+#friendslist ul li{
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 25px;
+    font-size: 20px;
+}
+#friendslist ul li:hover {
+    color:whitesmoke;
+    background-color:black;
 }
 #Caption{
     resize: none;
 }
 #post{
-    margin-left: 20px;
-    border-color: #537895;
-    border-bottom-style: solid;
-    border-left-style: solid;
-    border-right-style: solid;
-    border-width: 1px;
-    border-radius: 3px 3px 3px 3px;
-    margin-top: 8px;
+    border-bottom-style:groove ;
+    border-bottom-color:white;
+    border-width: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px 5px 5px 5px;
+    height: 250px;
 }
 .pbtn{
     height: 20px;
@@ -128,8 +136,10 @@
 }
 .hpost{
     border-bottom-style:groove ;
-    border-bottom-color:#f5f6fa;
-    border-width: 3px;
+    border-bottom-color:white;
+    border-width: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px 5px 5px 5px;
 }
 .pcmts{
     margin-left: 10%;
@@ -154,6 +164,12 @@
     background-color: #f5f6fa;
     border-radius: 5px 5px 5px 5px;
 }
+#newscontentsp{
+    width: 70%;
+    height: 70%;
+    background-color: #f5f6fa;
+    border-radius: 5px 5px 5px 5px;
+}
 #options{
     width: 20%;
     height: 50%;
@@ -175,6 +191,10 @@
 #newscategories li a:hover #newscategories li{
     background-color:#7ed6df;
 }
+#chatinfo{
+    margin-left: 130px;
+    margin-top: 20px;
+}
 #newscategories li{
     cursor: pointer;
     font-size: 20px;
@@ -191,15 +211,28 @@
 }
 .nimg{
     width: 60%;
-    margin-left: 5%;
+    margin-left: 17%;
+    margin-right: 120px;
+}
+.eachcontent{
+    padding: 15px;
+    border-width: 4px;
+    border-color: rgb(117, 181, 235);
+    border-radius: 5px 5px 5px 5px;
+}
+.nbutt{
+    margin: 15px;
 }
 #chatlist{
     width: 20%;
-    height: 50%;
+    height: 70%;
     margin-right: 3%;
     background-color: #f5f6fa;
     float: left;
     border-radius: 5px 5px 5px 5px;
+}
+#chatlist ul li{
+    font-size: 25px;
 }
 #chatcontent{
     width: 70%;
@@ -363,25 +396,30 @@ a{
 #gcanvas {
 width: 900px;
 height: 592px;
-border: 1px solid black;
+background-color: whitesmoke;
 position: absolute;
-left: 20%;
+left: 25%;
 top: 105px;
 display: none;
+border-radius: 5px 5px 5px 5px;
 }
 #gindex{
 width: 900px;
 height: 592px;
-border: 1px solid black;
+background-color: whitesmoke;
 position: absolute;
-left: 18%;
+left: 24%;
 top: 105px;
+border-radius: 5px 5px 5px 5px;
+
 }
 #gtitle{
   font-family: 'Cute Font', cursive;
   font-size: 100px;
   top: 40px;
   left: 270px;
+  margin-left: 290px;
+  margin-top: 25px;
 }
 #gdes{
   font-family: 'Cute Font', cursive;
@@ -427,7 +465,26 @@ top: 105px;
     font-weight: bold;
     width:250px;
     height:60px;
-    left:588px;
+    left:648px;
+    top:505px;
+    position: absolute;
+    border-color: #3B6E22;
+    border-width: 1px;
+    box-sizing: border-box;
+    font-size: 20px;
+    font-family: Helvetica;
+    cursor: pointer;
+    z-index: 1;
+    display: none;
+}
+#grestart{
+    border-radius: 5px 5px 5px 5px;
+    color:white;
+    background-color: #619F4E;
+    font-weight: bold;
+    width:250px;
+    height:60px;
+    left:898px;
     top:505px;
     position: absolute;
     border-color: #3B6E22;
@@ -443,23 +500,38 @@ top: 105px;
     position: fixed;
     z-index: 1;
     height: auto;
-    width: 267px;
-    background-color: #2D6C7A;
+    width: 266px;
+    background-color: whitesmoke;
+}
+#listcontent ul li{
+    border-radius: 3px 3px 3px 3px;
+    border:white;
+    background-color: whitesmoke;
+    border-style: solid;
+    border-width: 1px;
+    padding: 10px;
+    font-size: 20px;
+    padding-left: 30px;
+    cursor: pointer;
+}
+#listcontent ul{
+    padding: 0px;
+    margin: 0px;
 }
 #request{
     width: 67%;
-    height: 40%;
+    height: 30%;
     background-color: #f5f6fa;
     border-radius: 5px 5px 5px 5px;
     margin-left: 05%;
     margin-top: 2%;
 }
 #shead{
-    margin:3%;
-    margin-top: 2%;
+    margin:2.5%;
+    margin-top: 1.5%;
 }
 #scountry{
-    margin: 2%;
+    margin: 1.5%;
     margin-left: 3%;
 }
 #sinfo{
@@ -469,4 +541,27 @@ top: 105px;
 #sbutton{
     margin-left: 3%;
     margin-bottom: 3%;
+}
+.btn .badge{
+    top:3px;
+}
+#board{
+    border-bottom: rgba(255,255,255,0.10);
+    border-width: 2px;
+}
+#filebutton{
+    height: 50px;
+}
+#scoreboard{
+    width: 20%;
+    margin-left: 30px;
+    border-radius: 5px 5px 5px 5px;
+    margin-top: 20px;
+    height: 70%;
+    background-color: whitesmoke;
+}
+#scorelist li{
+    font-size: 20px;
+    margin-left: 75px;
+    margin-bottom: 10px;
 }
