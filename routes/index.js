@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var Request=require('../models/PendingRequest');
+var Score=require('../models/Score');
 var Register=require('../models/Register');
 var PostDetails=require('../models/PostDetails');
 var Chatdetails=require('../models/Chatdetails');
 var ReadLater=require('../models/ReadLater');
 var multer=require('multer');
 var url=require('url');
+var scorelist=[];
 var mongoose=require('mongoose');
 var HomeContent=[];
 var fileUrl;
@@ -14,7 +16,7 @@ var Friendslist=[];
 var ReadLaterlist=[];
 var Newsapi=require('newsapi');
 var NewsAPI=new Newsapi('6ae4cd0b3aae48cc9f1c59fe752e6252');
-var socketdetails={};
+var socketdetails=[];
 var msgtobedelivered=require('../models/MessageToBeDelivered');
 var Chatdetails=require('../models/Chatdetails');
 var onlinelist=[];
@@ -62,12 +64,18 @@ router.post('/register',function(req,res,next){
        password:req.body.pass,
        email:req.body.email,
        mobile:req.body.mobile,
+       score:0,
        Country:req.body.country
      });
      Register.findOne({username:req.body.uname}).exec(function(err,docs){
        if(docs){
          res.render('SignUp',{javascript:'Already Username Exist'});
        }else{
+         var scoredetail=new Score({
+           username:req.body.uname,
+           score:'0'
+         })
+         scoredetail.save();
          details.save();
          res.render('LogIn',{javascript:'Successfully Registered.Log In To Continue'});
        }
@@ -184,14 +192,32 @@ router.get('/Editlikes/:id',function (req,res,next) {
   console.log(id);
   PostDetails.findOne({_id:id}).exec(function(err,docs) {
     console.log(docs);
-    if(docs.likes)
-    docs.likes=docs.likes+req.session.username+',';
-    else
+    if(docs.likes){
+      var list=docs.likes.split(',');
+      if(req.session.username in list){
+      for(var i=0;i<list.length;i++){
+        if(list[i]==req.session.username){
+          list.splice(i,1);
+        }
+      }
+       docs.likes=list.join(",");
+       docs.save();
+       res.send('Like <span class="badge badge-light" style="margin-bottom:0px;top:3px>'+list.length-1+"</span>");
+      }else{
+         docs.likes=docs.likes+req.session.username+",";
+         var lis=docs.likes.split(',');
+         docs.save();
+         res.send('Dislike <span class="badge badge-light" style="margin-bottom:0px;top:3px>'+lis.length-1+"</span>");
+      }
+  }
+    else{
     docs.likes=req.session.username+',';
     docs.save();
+    var l=docs.likes.split(',');
+    res.send('Dislike <span class="badge badge-light" style="margin-bottom:0px;top:3px>'+l.length-1+"</span>");
+  }
   });
-  res.send('Dislike');
-}
+  }
 else{
   res.redirect('/');
 }
@@ -236,9 +262,9 @@ router.get('/News',function(req,res,next){
    language:'en',
 
  }).then(function(response){
-   req.session.username='Sid'; //change
+   
    Register.findOne({username:req.session.username}).exec(function(err,docs){
-   console.log(response.articles);
+   //console.log(response.articles);
    res.render('NewsHome',{content:JSON.stringify(response.articles),ReadLater:docs.ReadLater,Friendslist:docs.Friendslist});
    })
  }); }
@@ -316,7 +342,7 @@ router.get('/Chat',function(req,res,next){
   if(req.session.username){
   var username=req.session.username;
 Register.findOne({username:username}).exec(function(er,docs){
-  res.render("Chat",{listcontent:docs.Friendslist,chatcontent:'No Username is selected',username:username});
+  res.render("Chat",{listcontent:docs.Friendslist,chatcontent:'Tap Username to start conversation',username:username});
  
 })
 
@@ -376,7 +402,8 @@ res.send('Successfully Posted');
 router.get('/Profile',function(req,res,next){
   if(req.session.username){
   PostDetails.find({username:req.session.username}).exec(function(err,docs){
-    res.render('/Profile',{content:JSON.stringify(docs),username:req.session.username});
+    res.render('Profile',{contents:JSON.stringify(docs),username:req.session.username});
+    console.log(JSON.stringify(docs));
   })}
   else{
     res.redirect('/');
@@ -434,7 +461,19 @@ router.get('/Game',function(req,res,next){
     console.log(req.session.username);
   Register.findOne({username:req.session.username}).exec(function(err,doc){
     console.log(doc.Friendslist);
-    res.render('Game',{Friendslist:doc.Friendslist});
+    var list=doc.Friendslist.split(',');
+    Score.find({}).exec(function(err,doc){
+      for(var i=0;i<doc.length;i++){
+        if(list.indexOf(doc[i].username)!=-1){
+           scorelist[i]={username:doc[i].username,score:doc[i].score};
+        }
+      }
+      console.log(JSON.stringify(scorelist)+typeof(scorelist))
+      scorelist.sort(function(a,b){
+        return b.score.valueOf()-a.score.valueOf();
+      })
+    })
+    res.render('Game',{Friendslist:doc.Friendslist,Scorelist:JSON.stringify(scorelist)});
   })
 }else{
   res.redirect('/');
@@ -472,7 +511,7 @@ router.get('/Request/:from/:to',function(req,res,next){
   res.redirect('/');
 }
 })
-router.get('accept/:id',function(req,res,next){
+router.get('/accept/:id',function(req,res,next){
   if(req.session.username){
   Request.find({_id:req.params.id}).exec(function(err,doc){
     doc.seen=true;
@@ -507,6 +546,15 @@ router.get('/Deleterequest/:id',function(req,res,next){
     res.redirect('/');
   }
 })
-
+router.get('/updatescore/:score',function(req,res,next){
+  
+  Score.findOne({username:req.session.username}).exec(function(err,doc){
+    if(doc.score<req.params.score){
+       doc.score=req.params.score;
+       doc.save();
+    }
+    res.send('Updated Successfully');
+    })
+})
 
 module.exports = router;
