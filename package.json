@@ -20,7 +20,7 @@
     "newsapi": "^2.4.0",
     "node-localstorage": "^2.1.5",
     "session": "^0.1.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "url": "^0.11.0"
   }
 }
